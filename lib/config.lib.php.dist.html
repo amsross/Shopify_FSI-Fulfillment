@@ -1,0 +1,31 @@
+<?php
+	/* SHOPIFY CONFIG */
+	define('SHOPIFY_API_KEY', 'XXXXXXXXXX');
+	define('SHOPIFY_SECRET', 'XXXXXXXXXX');
+	define('SHOPIFY_SCOPE', 'read_orders,read_products,read_customers');
+
+	define('FTP_SERVER', 'XXXXXXXXXX.com');
+	define('FTP_SERVER_DIR', 'XXXXXXXXXX/orders/');
+	define('FTP_USER_NAME', 'XXXXXXXXXX');
+	define('FTP_USER_PASS', 'XXXXXXXXXX');
+
+	define('MYSQL_SERVER', "XXXXXXXXXX");
+	define('MYSQL_DB_NAME', "XXXXXXXXXX");
+	define('MYSQL_DB_UNAME', "XXXXXXXXXX");
+	define('MYSQL_DP_PWORD', "XXXXXXXXXX");
+	
+	if (class_exists("Smarty"))
+	{
+		$smarty = new Smarty;
+		//$smarty->force_compile = true;
+		$smarty->debugging = false;
+		$smarty->caching = false;
+		$smarty->cache_lifetime = 120;
+	}
+
+	/* simple debug function */
+	function debug(&$var) {
+		echo "<pre>";
+		print_r($var);
+		echo "</pre>";
+	}
