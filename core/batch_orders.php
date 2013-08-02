@@ -62,7 +62,7 @@
 		}
 
 		// Determine the CSV's filename
-		$fileCSVName = 'BRYord' . date('mdY') . '.csv';
+		$fileCSVName = $preferences['ClientCode'] . 'ord' . date('mdY') . '.csv';
 
 		// Try to get an existing version of the file on the server
 		if (@ftp_get($ftp_conn, $fileCSVName, FTP_SERVER_DIR . $fileCSVName, FTP_BINARY) || file_exists($fileCSVName)) {
