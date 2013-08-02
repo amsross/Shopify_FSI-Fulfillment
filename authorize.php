@@ -14,7 +14,61 @@ if (isset($_GET['code'])) {
 	if ($_SESSION['token'] != '')
 		$_SESSION['shop'] = $_GET['shop'];
 
+	@$mysqli = new mysqli(MYSQL_SERVER, MYSQL_DB_UNAME, MYSQL_DP_PWORD, MYSQL_DB_NAME);
+
+	if ($mysqli->connect_errno) {
+
+		$table_format = "CREATE TABLE IF NOT EXISTS `items` (
+			`Token` int(255) NOT NULL AUTO_INCREMENT,
+			`OrderNumber` varchar(255) NOT NULL,
+			`ItemNumber` varchar(255) NOT NULL,
+			`QtyOrdered` varchar(255) NOT NULL,
+			PRIMARY KEY (`Token`),
+			KEY `FK_OrderNumber` (`OrderNumber`)
+		) ENGINE=InnoDB	DEFAULT CHARSET=utf8 AUTO_INCREMENT=272 ;
+
+		CREATE TABLE IF NOT EXISTS `orders` (
+			`Token` varchar(255) DEFAULT NULL,
+			`FileType` varchar(255) NOT NULL,
+			`ClientCode` varchar(255) DEFAULT NULL,
+			`OrderNumber` varchar(255) DEFAULT NULL,
+			`CarrierCode` varchar(255) DEFAULT NULL,
+			`ShipToName` varchar(255) DEFAULT NULL,
+			`ShipToAddr1` varchar(255) DEFAULT NULL,
+			`ShipToAddr2` varchar(255) DEFAULT NULL,
+			`ShipToAddr3` varchar(255) DEFAULT NULL,
+			`ShipToAddr4` varchar(255) DEFAULT NULL,
+			`ShipToCity` varchar(255) DEFAULT NULL,
+			`ShipToState` varchar(255) DEFAULT NULL,
+			`ShipToZip` varchar(255) DEFAULT NULL,
+			`ShipToCountry` varchar(255) DEFAULT NULL,
+			`ShipToPhone` varchar(255) DEFAULT NULL,
+			`EmailName` varchar(255) DEFAULT NULL,
+			`EmailAddress` varchar(255) DEFAULT NULL,
+			`OrderDate` timestamp NULL DEFAULT NULL,
+			`ScrapedDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`Batched` tinyint(1) NOT NULL,
+			UNIQUE KEY `OrderNumber` (`OrderNumber`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+		CREATE TABLE IF NOT EXISTS `preferences` (
+			`Token` varchar(255) NOT NULL,
+			`ClientCode` text,
+			`CarrierCode` text,
+			UNIQUE KEY `Token` (`Token`)
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+		ALTER TABLE `items`
+			ADD CONSTRAINT `FK_OrderNumber` FOREIGN KEY (`OrderNumber`) REFERENCES `orders` (`OrderNumber`) ON DELETE CASCADE ON UPDATE CASCADE;
+		";
+
+		$mysqli->query($table_format);
+
+		$resultSelect->close();
+	}
+
 	header("Location: index.php");
+
 	exit;
 } else if (isset($_POST['shop']) || isset($_GET['shop'])) {
 	

@@ -17,7 +17,6 @@ if (isset($_SESSION['shop']) && isset($_SESSION['token'])){
 		array('name' => 'Home', 	'href' => '?action=index', 'class' => ''),
 		array('name' => 'Preferences', 	'href' => '?action=preferences', 'class' => ''),
 		array('name' => 'New orders', 	'href' => '?action=new_orders', 'class' => ''),
-		array('name' => 'Batch orders', 	'href' => '?action=batch_orders', 'class' => ''),
 		array('name' => 'Batched orders', 	'href' => '?action=batched_orders', 'class' => ''),
 		array('name' => 'Return to My Store', 	'href' => $returnURL, 'class' => ''),
 	));

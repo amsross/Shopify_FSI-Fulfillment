@@ -12,10 +12,10 @@
 		</tr>
 		{foreach $batched_orders as $batched_order}
 		<tr>
-			<td><a href="https://{$shopifyClient->shop_domain}/admin/orders/{$batched_order.OrderNumber}" target="_blank">{$batched_order.OrderNumber}</a></td>
-			<td>{$batched_order.ShipToName}</td>
-			<td>{$batched_order.OrderDate}</td>
-			<td>{$batched_order.ScrapedDate}</td>
+			<td><a href="https://{$shopifyClient->shop_domain}/admin/orders/{$batched_order->OrderNumber}" target="_blank">{$batched_order->OrderNumber}</a></td>
+			<td>{$batched_order->ShipToName}</td>
+			<td>{$batched_order->OrderDate}</td>
+			<td>{$batched_order->ScrapedDate}</td>
 		</tr>
 		{/foreach}
 	</tbody>
