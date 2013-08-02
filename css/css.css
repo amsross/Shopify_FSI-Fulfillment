@@ -411,3 +411,10 @@ div.new_tracks {
 #addmore {
 	margin: 0;
 }
+
+.footer {
+	padding:0px 2%;
+}
+	.footer small {
+		float:right;
+	}

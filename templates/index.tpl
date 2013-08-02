@@ -7,3 +7,5 @@
 	{/strip}
 	{/foreach}
 </ul>
+
+<p>If this is your first time using the app, please visit the <a href="?action=preferences">preferences</a> page to set your Shipping Carrier and FSI-designated Client Code.</p>
