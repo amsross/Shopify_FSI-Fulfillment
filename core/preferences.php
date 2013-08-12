@@ -1,10 +1,12 @@
 <?php
 
+	echo 'foo!';
 	$preferences = array();
 	$response = '';
 	
 	$smarty->assign('preferences', $preferences);
 	$smarty->assign('response', '');
+
 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
