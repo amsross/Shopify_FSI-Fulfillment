@@ -1,6 +1,5 @@
 <?php
 
-	echo 'foo!';
 	$preferences = array();
 	$response = '';
 	
@@ -8,11 +7,14 @@
 	$smarty->assign('response', '');
 
 
+	echo 'foo!';
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 		try {
 		
+	echo 'foo!';
 			@$mysqli = new mysqli(MYSQL_SERVER, MYSQL_DB_UNAME, MYSQL_DP_PWORD, MYSQL_DB_NAME);
+	echo 'foo!';
 
 			if ($mysqli->connect_errno) {
 			
