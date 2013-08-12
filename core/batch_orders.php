@@ -7,11 +7,10 @@
 	$smarty->assign('batched_orders', $batchedOrders);
 	$smarty->assign('response', count($batchedOrders) . ' Orders Batched');
 
-
 	try {
 
 		// open up MySQL connection
-		$mysqli = new mysqli(MYSQL_SERVER, MYSQL_DB_UNAME, MYSQL_DP_PWORD, MYSQL_DB_NAME);
+		@$mysqli = new mysqli(MYSQL_SERVER, MYSQL_DB_UNAME, MYSQL_DP_PWORD, MYSQL_DB_NAME);
 
 		if ($mysqli->connect_errno) {
 		
@@ -19,17 +18,18 @@
 		}
 
 		// set up basic connection
-		if (!$ftp_conn = ftp_connect(FTP_SERVER)) {
+		if (!@$ftp_conn = ftp_connect(FTP_SERVER)) {
 
 			throw new Exception("Error: FTP connection failed.");
 		}
 
 		// login with username and password
-		if (!$login_result = ftp_login($ftp_conn, FTP_USER_NAME, FTP_USER_PASS)) {
+		if (!@$login_result = ftp_login($ftp_conn, FTP_USER_NAME, FTP_USER_PASS)) {
 
 			throw new Exception("Error: FTP login failed.");
 		}
-		
+
+		// heroku only supports passive FTP
 		ftp_pasv($ftp_conn, true);
 
 		$select = "SELECT *
@@ -71,7 +71,7 @@
 		$fileCSVName = $preferences['ClientCode'] . 'ord' . date('mdY') . '.csv';
 
 		// Try to get an existing version of the file on the server
-		if (ftp_get($ftp_conn, $fileCSVName, FTP_SERVER_DIR . $fileCSVName, FTP_BINARY) || file_exists($fileCSVName)) {
+		if (@ftp_get($ftp_conn, $fileCSVName, FTP_SERVER_DIR . $fileCSVName, FTP_BINARY) || file_exists($fileCSVName)) {
 			$line = "";
 		} else {
 			// If no previous version exists, create the column headers
@@ -214,7 +214,7 @@
 		fclose($fileCSV);
 
 		// Try to upload CSV file
-		if (!ftp_put($ftp_conn, FTP_SERVER_DIR . $fileCSVName, $fileCSVName, FTP_BINARY)) :
+		if (!@ftp_put($ftp_conn, FTP_SERVER_DIR . $fileCSVName, $fileCSVName, FTP_BINARY)) :
 
 			throw new Exception("Error: There was a problem while uploading $fileCSVName");
 		endif;
