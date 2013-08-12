@@ -1,20 +1,20 @@
 <?php
 
-	$preferences = array();
+	$preferences = array(
+		'ClientCode' => '',
+		'CarrierCode' => '',
+		);
 	$response = '';
 	
 	$smarty->assign('preferences', $preferences);
 	$smarty->assign('response', '');
 
 
-	echo 'foo!';
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 		try {
 		
-	echo 'foo!';
 			@$mysqli = new mysqli(MYSQL_SERVER, MYSQL_DB_UNAME, MYSQL_DP_PWORD, MYSQL_DB_NAME);
-	echo 'foo!';
 
 			if ($mysqli->connect_errno) {
 			

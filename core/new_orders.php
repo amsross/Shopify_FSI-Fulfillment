@@ -19,13 +19,13 @@
 		}
 
 		// set up basic connection
-		if (!@$ftp_conn = ftp_connect(FTP_SERVER)) {
+		if (!$ftp_conn = ftp_connect(FTP_SERVER)) {
 
 			throw new Exception("Error: FTP connection failed.");
 		}
 
 		// login with username and password
-		if (!@$login_result = ftp_login($ftp_conn, FTP_USER_NAME, FTP_USER_PASS)) {
+		if (!$login_result = ftp_login($ftp_conn, FTP_USER_NAME, FTP_USER_PASS)) {
 
 			throw new Exception("Error: FTP login failed.");
 		}
