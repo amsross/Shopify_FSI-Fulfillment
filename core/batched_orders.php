@@ -3,6 +3,8 @@
 	$batched_orders = array();
 	$new_orders = array();
 
+	$smarty->assign('response', 'No Batched Orders Found');
+	$smarty->assign('batched_orders', $batched_orders);
 	try {
 
 		@$mysqli = new mysqli(MYSQL_SERVER, MYSQL_DB_UNAME, MYSQL_DP_PWORD, MYSQL_DB_NAME);
