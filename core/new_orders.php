@@ -40,6 +40,7 @@
 		$select = "SELECT *
 					FROM orders
 					WHERE Token = '{$_SESSION['token']}'
+						AND Batched = 1
 					
 					";
 

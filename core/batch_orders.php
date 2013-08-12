@@ -43,7 +43,7 @@
 		}
 
 		// login with username and password
-		if (!@$login_result = ftp_login($ftp_conn, $preferences['FTPUserName'], $preferences['FTPPasswprd'])) {
+		if (!@$login_result = ftp_login($ftp_conn, $preferences['FTPUserName'], $preferences['FTPPassword'])) {
 
 			throw new Exception("Error: FTP login failed.");
 		}
