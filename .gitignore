@@ -5,3 +5,6 @@ error_log
 config.lib.php
 img/color*
 img/manufacturer*
+*.sublime-project
+*.sublime-workspace
+sftp-config.json
