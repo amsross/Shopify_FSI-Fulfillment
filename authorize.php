@@ -20,7 +20,7 @@ if (isset($_GET['code'])) {
 
 	if ($mysqli->connect_errno) {
 
-		$table_format = "CREATE TABLE IF NOT EXISTS `orders` (
+		$table_format = "CREATE TABLE IF NOT EXISTS `".MYSQL_DB_NAME."`.`orders` (
 			`Token` varchar(255) DEFAULT NULL,
 			`OrderNumber` varchar(255) DEFAULT NULL,
 			`ScrapedDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -28,10 +28,12 @@ if (isset($_GET['code'])) {
 			UNIQUE KEY `OrderNumber` (`OrderNumber`)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-		CREATE TABLE IF NOT EXISTS `preferences` (
+		CREATE TABLE IF NOT EXISTS `".MYSQL_DB_NAME."`.`preferences` (
 			`Token` varchar(255) NOT NULL,
 			`ClientCode` text,
 			`CarrierCode` text,
+			`FTPUserName` text,
+			`FTPPassword` text,
 			UNIQUE KEY `Token` (`Token`)
 		) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 		";
