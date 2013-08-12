@@ -1,7 +1,7 @@
 Shopify_FSI-Fulfillment
 =======================
 
-This is an app that provides a simple interface through which store owners can select orders or groups of orders to be added to a CSV file and uploaded to [FSI](http://www.fsi-intl.com/)'s servers using their own FTP login information.
+This is an app that provides a simple interface through which store owners can select orders or groups of orders to be added to a CSV file and uploaded to [FSI](http://www.fsifulfillment.com/)'s servers using their own FTP login information.
 
 This is intended to be deployed to [Heroku](http://www.heroku.com/) using the [ClearDB](https://addons.heroku.com/cleardb) add-on.
 
