@@ -3,6 +3,8 @@
 	$preferences = array(
 		'ClientCode' => '',
 		'CarrierCode' => '',
+		'FTPUserName' => '',
+		'FTPPassword' => '',
 		);
 	$response = '';
 	
@@ -23,14 +25,18 @@
 
 			$ClientCode = filter_var($_POST['ClientCode'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
 			$CarrierCode = filter_var($_POST['CarrierCode'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+			$FTPUserName = filter_var($_POST['FTPUserName'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+			$FTPPassword = filter_var($_POST['FTPPassword'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
 
-			$insert = "INSERT INTO preferences (Token, ClientCode, CarrierCode)
-						VALUES ('{$_SESSION['token']}', '$ClientCode', '$CarrierCode')
+			$insert = "INSERT INTO preferences (Token, ClientCode, CarrierCode, FTPUserName, FTPPassword)
+						VALUES ('{$_SESSION['token']}', '$ClientCode', '$CarrierCode', '$FTPUserName', '$FTPPassword')
 						ON DUPLICATE KEY
 							UPDATE
 								Token = '{$_SESSION['token']}',
 								ClientCode = '$ClientCode',
-								CarrierCode = '$CarrierCode'
+								CarrierCode = '$CarrierCode',
+								FTPUserName = '$FTPUserName',
+								FTPPassword = '$FTPPassword'
 								";
 
 			if ($resultSelect = $mysqli->query($insert)) {

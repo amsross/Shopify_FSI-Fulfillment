@@ -45,6 +45,18 @@
 			</td>
 		</tr>
 		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<th style="width:50%;">FTP Username</th>
+			<th style="width:50%;">FTP Password</th>
+		</tr>
+		<tr>
+			<td><input type="text" value="{$preferences.FTPUserName}" name="FTPUserName"/></td>
+			<td><input type="text" value="{$preferences.FTPPassword}" name="FTPPassword"/></td>
+		</tr>
+		<tr>
 			<td></td>
 			<td><input type="submit" value="Save" /></td>
 		</tr>

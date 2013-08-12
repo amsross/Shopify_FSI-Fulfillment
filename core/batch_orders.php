@@ -17,21 +17,6 @@
 			throw new Exception("Error: " . $mysqli->connect_error);
 		}
 
-		// set up basic connection
-		if (!@$ftp_conn = ftp_connect(FTP_SERVER)) {
-
-			throw new Exception("Error: FTP connection failed.");
-		}
-
-		// login with username and password
-		if (!@$login_result = ftp_login($ftp_conn, FTP_USER_NAME, FTP_USER_PASS)) {
-
-			throw new Exception("Error: FTP login failed.");
-		}
-
-		// heroku only supports passive FTP
-		ftp_pasv($ftp_conn, true);
-
 		$select = "SELECT *
 					FROM preferences
 					WHERE Token = '{$_SESSION['token']}'
@@ -50,6 +35,21 @@
 			
 			$resultSelect->close();
 		}
+
+		// set up basic connection
+		if (!@$ftp_conn = ftp_connect(FTP_SERVER)) {
+
+			throw new Exception("Error: FTP connection failed.");
+		}
+
+		// login with username and password
+		if (!@$login_result = ftp_login($ftp_conn, $preferences['FTPUserName'], $preferences['FTPPasswprd'])) {
+
+			throw new Exception("Error: FTP login failed.");
+		}
+
+		// heroku only supports passive FTP
+		ftp_pasv($ftp_conn, true);
 
 		// Get all the previously stored orders for cross-referencing
 		$select = "SELECT *
