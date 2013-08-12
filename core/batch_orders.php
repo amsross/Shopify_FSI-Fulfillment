@@ -23,13 +23,14 @@
 
 			throw new Exception("Error: FTP connection failed.");
 		}
-		ftp_pasv($ftp_conn, true);
 
 		// login with username and password
 		if (!$login_result = ftp_login($ftp_conn, FTP_USER_NAME, FTP_USER_PASS)) {
 
 			throw new Exception("Error: FTP login failed.");
 		}
+		
+		ftp_pasv($ftp_conn, true);
 
 		$select = "SELECT *
 					FROM preferences
