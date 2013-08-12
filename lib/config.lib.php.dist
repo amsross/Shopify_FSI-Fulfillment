@@ -5,14 +5,20 @@
 	define('SHOPIFY_SCOPE', 'read_orders,read_products,read_customers');
 
 	define('FTP_SERVER', 'XXXXXXXXXX.com');
-	define('FTP_SERVER_DIR', 'XXXXXXXXXX/orders/');
-	define('FTP_USER_NAME', 'XXXXXXXXXX');
-	define('FTP_USER_PASS', 'XXXXXXXXXX');
+	define('FTP_SERVER_DIR', 'SO_Files');
 
-	define('MYSQL_SERVER', "XXXXXXXXXX");
-	define('MYSQL_DB_NAME', "XXXXXXXXXX");
-	define('MYSQL_DB_UNAME', "XXXXXXXXXX");
-	define('MYSQL_DP_PWORD', "XXXXXXXXXX");
+	$mysql=parse_url(getenv("CLEARDB_DATABASE_URL"));
+	define('MYSQL_SERVER', $mysql["host"]);
+	define('MYSQL_DB_NAME', substr($mysql["path"],1));
+	define('MYSQL_DB_UNAME', $mysql["user"]);
+	define('MYSQL_DP_PWORD', $mysql["pass"]);
+
+	$preferences = array(
+		'ClientCode' => null,
+		'CarrierCode' => null,
+		'FTPUserName' => null,
+		'FTPPassword' => null,
+		);
 	
 	if (class_exists("Smarty"))
 	{
