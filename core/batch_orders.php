@@ -4,6 +4,10 @@
 	$batchedOrders = array();
 	$new_orders = array();
 
+	$smarty->assign('batched_orders', $batchedOrders);
+	$smarty->assign('response', count($batchedOrders) . ' Orders Batched');
+
+
 	try {
 
 		// open up MySQL connection
@@ -19,6 +23,7 @@
 
 			throw new Exception("Error: FTP connection failed.");
 		}
+		ftp_pasv($ftp_conn, true);
 
 		// login with username and password
 		if (!$login_result = ftp_login($ftp_conn, FTP_USER_NAME, FTP_USER_PASS)) {
