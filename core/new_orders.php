@@ -2,6 +2,11 @@
 
 	$batched_orders = array();
 	$new_orders = array();
+	
+	$smarty->assign('response', count($new_orders) . ' Unbatched Orders');
+	$smarty->assign('new_orders', $new_orders);
+	$smarty->assign('order_object', '');
+
 
 	try {
 
