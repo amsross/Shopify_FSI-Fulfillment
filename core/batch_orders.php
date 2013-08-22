@@ -71,7 +71,7 @@
 		$fileCSVName = $preferences['ClientCode'] . 'ord' . date('mdY') . '.csv';
 
 		// Try to get an existing version of the file on the server
-		if (@ftp_get($ftp_conn, $fileCSVName, $preferences['FTPServerDir'] . $fileCSVName, FTP_BINARY) || file_exists($fileCSVName)) {
+		if (@ftp_get($ftp_conn, $fileCSVName, $preferences['FTPServerDir'] . '/' . $fileCSVName, FTP_BINARY) || file_exists($fileCSVName)) {
 			$line = "";
 		} else {
 			// If no previous version exists, create the column headers
