@@ -214,7 +214,7 @@
 		fclose($fileCSV);
 
 		// Try to upload CSV file
-		if (!@ftp_put($ftp_conn, $preferences['FTPServerDir'] . $fileCSVName, $fileCSVName, FTP_BINARY)) :
+		if (!@ftp_put($ftp_conn, $preferences['FTPServerDir'] . '/' . $fileCSVName, $fileCSVName, FTP_BINARY)) :
 
 			throw new Exception("Error: There was a problem while uploading $fileCSVName");
 		endif;
