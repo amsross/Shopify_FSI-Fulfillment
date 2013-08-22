@@ -3,6 +3,8 @@
 	$preferences = array(
 		'ClientCode' => '',
 		'CarrierCode' => '',
+		'FTPServer' => 'ftp.unitedfsi.com',
+		'FTPServerDir' => 'SO_Files',
 		'FTPUserName' => '',
 		'FTPPassword' => '',
 		);
@@ -23,18 +25,22 @@
 				throw new Exception("Error: " . $mysqli->connect_error);
 			}
 
-			$ClientCode = filter_var($_POST['ClientCode'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
-			$CarrierCode = filter_var($_POST['CarrierCode'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
-			$FTPUserName = filter_var($_POST['FTPUserName'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
-			$FTPPassword = filter_var($_POST['FTPPassword'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+			$ClientCode = filter_var(trim($_POST['ClientCode']), FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+			$CarrierCode = filter_var(trim($_POST['CarrierCode']), FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+			$FTPServer = filter_var(trim($_POST['FTPServer']), FILTER_SANITIZE_URL, FILTER_FLAG_STRIP_HIGH);
+			$FTPServerDir = filter_var(trim($_POST['FTPServerDir']), FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+			$FTPUserName = filter_var(trim($_POST['FTPUserName']), FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+			$FTPPassword = filter_var(trim($_POST['FTPPassword']), FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
 
-			$insert = "INSERT INTO preferences (Token, ClientCode, CarrierCode, FTPUserName, FTPPassword)
-						VALUES ('{$_SESSION['token']}', '$ClientCode', '$CarrierCode', '$FTPUserName', '$FTPPassword')
+			$insert = "INSERT INTO preferences (Token, ClientCode, CarrierCode, FTPServer, FTPServerDir, FTPUserName, FTPPassword)
+						VALUES ('{$_SESSION['token']}', '$ClientCode', '$CarrierCode', '$FTPServer', '$FTPServerDir', '$FTPUserName', '$FTPPassword')
 						ON DUPLICATE KEY
 							UPDATE
 								Token = '{$_SESSION['token']}',
 								ClientCode = '$ClientCode',
 								CarrierCode = '$CarrierCode',
+								FTPServer = '$FTPServer',
+								FTPServerDir = '$FTPServerDir',
 								FTPUserName = '$FTPUserName',
 								FTPPassword = '$FTPPassword'
 								";
@@ -71,6 +77,10 @@
 				$preferences = array(
 					'ClientCode' => null,
 					'CarrierCode' => null,
+					'FTPServer' => 'ftp.unitedfsi.com',
+					'FTPServerDir' => 'SO_Files',
+					'FTPUserName' => null,
+					'FTPPassword' => null,
 					);
 			} else {
 

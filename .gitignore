@@ -8,3 +8,4 @@ img/manufacturer*
 *.sublime-project
 *.sublime-workspace
 sftp-config.json
+Thumbs.db

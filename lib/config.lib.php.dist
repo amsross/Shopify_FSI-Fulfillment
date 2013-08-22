@@ -4,9 +4,6 @@
 	define('SHOPIFY_SECRET', 'XXXXXXXXXX');
 	define('SHOPIFY_SCOPE', 'read_orders,read_products,read_customers');
 
-	define('FTP_SERVER', 'XXXXXXXXXX.com');
-	define('FTP_SERVER_DIR', 'SO_Files');
-
 	$mysql=parse_url(getenv("CLEARDB_DATABASE_URL"));
 	define('MYSQL_SERVER', $mysql["host"]);
 	define('MYSQL_DB_NAME', substr($mysql["path"],1));
@@ -16,6 +13,8 @@
 	$preferences = array(
 		'ClientCode' => null,
 		'CarrierCode' => null,
+		'FTPServer' => null,
+		'FTPServerDir' => 'SO_Files',
 		'FTPUserName' => null,
 		'FTPPassword' => null,
 		);

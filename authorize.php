@@ -30,6 +30,8 @@ if (isset($_GET['code'])) {
 			`Token` varchar(255) NOT NULL,
 			`ClientCode` text,
 			`CarrierCode` text,
+			`FTPServer` text,
+			`FTPServerDir` text,
 			`FTPUserName` text,
 			`FTPPassword` text,
 			UNIQUE KEY `Token` (`Token`)

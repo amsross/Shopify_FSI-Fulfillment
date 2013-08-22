@@ -37,7 +37,7 @@
 		}
 
 		// set up basic connection
-		if (!@$ftp_conn = ftp_connect(FTP_SERVER)) {
+		if (!@$ftp_conn = ftp_connect($preferences['FTPServer'])) {
 
 			throw new Exception("Error: FTP connection failed.");
 		}
@@ -71,7 +71,7 @@
 		$fileCSVName = $preferences['ClientCode'] . 'ord' . date('mdY') . '.csv';
 
 		// Try to get an existing version of the file on the server
-		if (@ftp_get($ftp_conn, $fileCSVName, FTP_SERVER_DIR . $fileCSVName, FTP_BINARY) || file_exists($fileCSVName)) {
+		if (@ftp_get($ftp_conn, $fileCSVName, $preferenes['FTPServerDir'] . $fileCSVName, FTP_BINARY) || file_exists($fileCSVName)) {
 			$line = "";
 		} else {
 			// If no previous version exists, create the column headers
@@ -214,7 +214,7 @@
 		fclose($fileCSV);
 
 		// Try to upload CSV file
-		if (!@ftp_put($ftp_conn, FTP_SERVER_DIR . $fileCSVName, $fileCSVName, FTP_BINARY)) :
+		if (!@ftp_put($ftp_conn, $preferenes['FTPServerDir'] . $fileCSVName, $fileCSVName, FTP_BINARY)) :
 
 			throw new Exception("Error: There was a problem while uploading $fileCSVName");
 		endif;
