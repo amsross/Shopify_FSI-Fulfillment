@@ -4,7 +4,8 @@
 	$batchedOrders = array();
 	$new_orders = array();
 
-	$order_object = json_decode( $HTTP_RAW_POST_DATA );
+	$raw_post_data = json_decode(file_get_contents("php://input"));
+	$order_object = json_decode( $raw_post_data );
 
 	$smarty->assign('batched_orders', $batchedOrders);
 	$smarty->assign('response', count($batchedOrders) . ' Orders Batched');
@@ -83,12 +84,12 @@
 		// Open the CSV file for writing without destroying existing content
 		$fileCSV = fopen($fileCSVName, 'a');
 
-		if (!isset($HTTP_RAW_POST_DATA ) || empty($HTTP_RAW_POST_DATA )) :
+		if (!isset($raw_post_data ) || empty($raw_post_data )) :
 
 			throw new Exception("Error: No orders selected.");
 		endif;
 
-		foreach (array($HTTP_RAW_POST_DATA) as $order) :
+		foreach (array($raw_post_data) as $order) :
 
 			$order_object = json_decode( $order );
 
