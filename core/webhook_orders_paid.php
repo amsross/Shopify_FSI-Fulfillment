@@ -4,6 +4,8 @@
 	$batchedOrders = array();
 	$new_orders = array();
 
+	$order_object = json_decode( $HTTP_RAW_POST_DATA );
+
 	$smarty->assign('batched_orders', $batchedOrders);
 	$smarty->assign('response', count($batchedOrders) . ' Orders Batched');
 
@@ -19,7 +21,7 @@
 
 		$select = "SELECT *
 					FROM preferences
-					WHERE Token = '{$_SESSION['token']}'
+					WHERE Token = '{$order_object->token}'
 					LIMIT 1
 					";
 
@@ -54,7 +56,7 @@
 		// Get all the previously stored orders for cross-referencing
 		$select = "SELECT *
 					FROM orders
-					WHERE Token = '{$_SESSION['token']}'
+					WHERE Token = '{$order_object->token}'
 					";
 
 		if ($resultSelect = $mysqli->query($select)) {
@@ -86,27 +88,9 @@
 			throw new Exception("Error: No orders selected.");
 		endif;
 
-		$order_object_responses = array();
+		foreach (array($HTTP_RAW_POST_DATA) as $order) :
 
-		foreach (array($HTTP_RAW_POST_DATA)  as $order) :
-
-			// Get the selected order
-			// Store the others.
-			// $order_object_response = $shopifyClient->call('GET', "/admin/orders/{$order}.json");
-
-			// $order_object_responses[] = $order_object_response;
-			
-			// $order_objects = json_encode( $order_object_response );
-			// $order_object = json_decode( $order_objects );
-			$order_object = json_decode( $HTTP_RAW_POST_DATA );
-			
-			// foreach ( $batched_orders as $batched_order ) :
-
-			// 	if ($order_object->id == $batched_order['OrderNumber']) {
-
-			// 		continue 2;
-			// 	}
-			// endforeach;
+			$order_object = json_decode( $order );
 
 			// Create the DB record for the order to poll for status later
 			$insert = "INSERT INTO
