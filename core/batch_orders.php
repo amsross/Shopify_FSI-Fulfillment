@@ -248,6 +248,25 @@
 			endif;
 		endforeach;
 
+		$line_items = array();
+		foreach ($order_object->line_items as $line_item) {
+			$line_items[] = array("id" => $line_item->id);
+		}
+		$fulfillment = array(
+			"fulfillment" => array(
+				"tracking_number" => null,
+				"notify_customer" => false,
+				"line_items" => $line_items,
+			)
+		);
+		$fulfillment_object_response = $shopifyClient->call('POST', "/admin/orders/{$order}/fulfillments.json", $fulfillment);
+		$fulfillment_objects = json_encode( $fulfillment_object_response );
+		$fulfillment_object = json_decode( $fulfillment_objects );
+		if ($fulfillment_object->status !== "success") {
+			
+			throw new Exception("Error: Failed to update Shopify fulfillment status.");
+		}
+
 		$smarty->assign('batched_orders', $batchedOrders);
 
 		$mysqli->close();
