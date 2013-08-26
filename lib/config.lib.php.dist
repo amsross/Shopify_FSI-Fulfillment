@@ -2,7 +2,7 @@
 	/* SHOPIFY CONFIG */
 	define('SHOPIFY_API_KEY', 'XXXXXXXXXX');
 	define('SHOPIFY_SECRET', 'XXXXXXXXXX');
-	define('SHOPIFY_SCOPE', 'read_orders,read_products,read_customers,read_fulfillments,write_fulfillments');
+	define('SHOPIFY_SCOPE', 'read_orders,write_orders,read_products,read_customers');
 
 	$mysql=parse_url(getenv("CLEARDB_DATABASE_URL"));
 	define('MYSQL_SERVER', $mysql["host"]);
