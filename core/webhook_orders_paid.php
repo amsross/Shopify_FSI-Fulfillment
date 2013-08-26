@@ -92,27 +92,21 @@
 
 			// Get the selected order
 			// Store the others.
-			$order_object_response = $shopifyClient->call('GET', "/admin/orders/{$order}.json");
+			// $order_object_response = $shopifyClient->call('GET', "/admin/orders/{$order}.json");
 
-			$order_object_responses[] = $order_object_response;
+			// $order_object_responses[] = $order_object_response;
 			
-			$order_objects = json_encode( $order_object_response );
-			$order_object = json_decode( $order_objects );
-
-			// Make sure this order was selected for batching
-			if ( !is_array($HTTP_RAW_POST_DATA ) || !in_array($order_object->id, $HTTP_RAW_POST_DATA ) ) :
-
-				continue;
-			else :
+			// $order_objects = json_encode( $order_object_response );
+			// $order_object = json_decode( $order_objects );
+			$order_object = json_decode( $HTTP_RAW_POST_DATA );
 			
-				foreach ( $batched_orders as $batched_order ) :
+			// foreach ( $batched_orders as $batched_order ) :
 
-					if ($order_object->id == $batched_order['OrderNumber']) {
+			// 	if ($order_object->id == $batched_order['OrderNumber']) {
 
-						continue 2;
-					}
-				endforeach;
-			endif;
+			// 		continue 2;
+			// 	}
+			// endforeach;
 
 			// Create the DB record for the order to poll for status later
 			$insert = "INSERT INTO
@@ -248,24 +242,24 @@
 			endif;
 		endforeach;
 
-		$line_items = array();
-		foreach ($order_object->line_items as $line_item) {
-			$line_items[] = array("id" => $line_item->id);
-		}
-		$fulfillment = array(
-			"fulfillment" => array(
-				"tracking_number" => null,
-				"notify_customer" => false,
-				"line_items" => $line_items,
-			)
-		);
-		$fulfillment_object_response = $shopifyClient->call('POST', "/admin/orders/{$order}/fulfillments.json", $fulfillment);
-		$fulfillment_objects = json_encode( $fulfillment_object_response );
-		$fulfillment_object = json_decode( $fulfillment_objects );
-		if ($fulfillment_object->status !== "success") {
+		// $line_items = array();
+		// foreach ($order_object->line_items as $line_item) {
+		// 	$line_items[] = array("id" => $line_item->id);
+		// }
+		// $fulfillment = array(
+		// 	"fulfillment" => array(
+		// 		"tracking_number" => null,
+		// 		"notify_customer" => false,
+		// 		"line_items" => $line_items,
+		// 	)
+		// );
+		// $fulfillment_object_response = $shopifyClient->call('POST', "/admin/orders/{$order}/fulfillments.json", $fulfillment);
+		// $fulfillment_objects = json_encode( $fulfillment_object_response );
+		// $fulfillment_object = json_decode( $fulfillment_objects );
+		// if ($fulfillment_object->status !== "success") {
 			
-			throw new Exception("Error: Failed to update Shopify fulfillment status.");
-		}
+		// 	throw new Exception("Error: Failed to update Shopify fulfillment status.");
+		// }
 
 		$smarty->assign('batched_orders', $batchedOrders);
 
