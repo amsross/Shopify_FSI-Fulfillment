@@ -55,7 +55,8 @@
 
 		// Get all paid orders to see which have been batched.
 		// Store the others.
-		$order_object_response = $shopifyClient->call('GET', '/admin/orders.json?financial_status=paid');
+		// $order_object_response = $shopifyClient->call('GET', '/admin/orders.json?financial_status=authorized');
+		$order_object_response = $shopifyClient->call('GET', '/admin/orders.json?financial_status=any&fulfillment_status=unshipped');
 		$smarty->assign('order_object', $order_object_response);
 		
 		$order_objects = json_encode( $order_object_response );
