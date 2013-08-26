@@ -38,6 +38,15 @@ if (isset($_GET['code'])) {
 		) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 		";
 
+		$webhook = array(
+			"webhook" => array(
+				"topic" => "orders/paid",
+				"address" => "http://fsi.shopify.rhinorojo.com/index.php?action=webhook_orders_paid",
+				"format" => "json",
+			)
+		);
+		$webhook_create_response = $shopifyClient->call('POST', '/admin/webhooks.json', $webhook);
+
 		$mysqli->query($table_format);
 
 		$resultSelect->close();

@@ -7,7 +7,6 @@
 	$smarty->assign('new_orders', $new_orders);
 	$smarty->assign('order_object', '');
 
-
 	try {
 
 		// open up MySQL connection
