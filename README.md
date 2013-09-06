@@ -9,5 +9,3 @@ Be sure to copy `lib/config.lib.php.dist` to `lib/config.lib.php` and replace th
 You will also need to force the addition of the new config file to the repo (`git add -f lib/config.lib.php`) or remove it from `.gitignore`.
 
 * The SHOPIFY_* values should be from your app's [settings page](https://app.shopify.com/services/partners/api_clients/)
-
-* The FTP_* values should be for the FTP server the batch-generated CSV file should be uploaded to.
