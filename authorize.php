@@ -6,10 +6,10 @@ include_once('lib/ohShopify/shopify.php');
 
 // if the code param has been sent to this page... we are in Step 2
 if (isset($_GET['code'])) {
+	session_unset();
 
 	// Step 2: do a form POST to get the access token
 	$shopifyClient = new ShopifyClient($_GET['shop'], "", SHOPIFY_API_KEY, SHOPIFY_SECRET);
-	session_unset();
 	$_SESSION['token'] = $shopifyClient->getAccessToken($_GET['code']);
 	if ($_SESSION['token'] != '')
 		$_SESSION['shop'] = $_GET['shop'];
@@ -40,18 +40,31 @@ if (isset($_GET['code'])) {
 		) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 		";
 
+		$mysqli->query($table_format);
+
+		$mysqli->close();
+	}
+
+	try {
+		
+		$shopifyClient = new ShopifyClient($_SESSION['shop'], $_SESSION['token'], SHOPIFY_API_KEY, SHOPIFY_SECRET);
+
 		$webhook = array(
 			"webhook" => array(
 				"topic" => "orders/paid",
-				"address" => "http://fsi.shopify.rhinorojo.com/index.php?action=webhook_orders_paid",
+				// "address" => "http://fsi.shopify.rhinorojo.com/index.php?action=webhook_orders_paid",
+				"address" => "http://foobar.rhinorojo.com/index.php?action=webhook_orders_paid",
 				"format" => "json",
 			)
 		);
+		
 		$webhook_create_response = $shopifyClient->call('POST', '/admin/webhooks.json', $webhook);
+	} catch (ShopifyApiException $e) {
+		
+		$smarty->assign('response', $e->getMessage());
+	} catch (Exception $e) {
 
-		$mysqli->query($table_format);
-
-		$resultSelect->close();
+		$smarty->assign('response', $e->getMessage());
 	}
 
 	header("Location: index.php");
