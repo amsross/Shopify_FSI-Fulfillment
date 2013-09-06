@@ -1,13 +1,5 @@
 <?php
 
-	$preferences = array(
-		'ClientCode' => '',
-		'CarrierCode' => '',
-		'FTPServer' => 'ftp.unitedfsi.com',
-		'FTPServerDir' => 'SO_Files',
-		'FTPUserName' => '',
-		'FTPPassword' => '',
-		);
 	$response = '';
 	
 	$smarty->assign('preferences', $preferences);
@@ -32,10 +24,11 @@
 			$FTPUserName = filter_var(trim($_POST['FTPUserName']), FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
 			$FTPPassword = filter_var(trim($_POST['FTPPassword']), FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
 
-			$insert = "INSERT INTO preferences (Token, ClientCode, CarrierCode, FTPServer, FTPServerDir, FTPUserName, FTPPassword)
-						VALUES ('{$_SESSION['token']}', '$ClientCode', '$CarrierCode', '$FTPServer', '$FTPServerDir', '$FTPUserName', '$FTPPassword')
+			$insert = "INSERT INTO preferences (Shop, Token, ClientCode, CarrierCode, FTPServer, FTPServerDir, FTPUserName, FTPPassword)
+						VALUES ('{$_SESSION['shop']}', '{$_SESSION['token']}', '$ClientCode', '$CarrierCode', '$FTPServer', '$FTPServerDir', '$FTPUserName', '$FTPPassword')
 						ON DUPLICATE KEY
 							UPDATE
+								Shop = '{$_SESSION['shop']}',
 								Token = '{$_SESSION['token']}',
 								ClientCode = '$ClientCode',
 								CarrierCode = '$CarrierCode',
@@ -60,37 +53,8 @@
 	}
 
 	try {
-	
-		@$mysqli = new mysqli(MYSQL_SERVER, MYSQL_DB_UNAME, MYSQL_DP_PWORD, MYSQL_DB_NAME);
 
-		if ($mysqli->connect_errno) {
-		
-			throw new Exception("Error: " . $mysqli->connect_error);
-		}
-
-		$select = "SELECT * FROM preferences WHERE Token = '{$_SESSION['token']}' LIMIT 1";
-
-		if ($resultSelect = $mysqli->query($select)) {
-			
-			if (count($resultSelect->num_rows) < 1) {
-
-				$preferences = array(
-					'ClientCode' => null,
-					'CarrierCode' => null,
-					'FTPServer' => 'ftp.unitedfsi.com',
-					'FTPServerDir' => 'SO_Files',
-					'FTPUserName' => null,
-					'FTPPassword' => null,
-					);
-			} else {
-
-				while ($row = $resultSelect->fetch_assoc()) {
-					$preferences = $row;
-				}
-			}
-
-			$resultSelect->close();
-		}
+		include('lib/get_preferences.php');
 
 		$smarty->assign('preferences', $preferences);
 

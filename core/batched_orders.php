@@ -1,5 +1,7 @@
 <?php
 
+	include('lib/get_preferences.php');
+
 	$batched_orders = array();
 	$new_orders = array();
 
@@ -7,34 +9,9 @@
 	$smarty->assign('batched_orders', $batched_orders);
 	try {
 
-		@$mysqli = new mysqli(MYSQL_SERVER, MYSQL_DB_UNAME, MYSQL_DP_PWORD, MYSQL_DB_NAME);
-
-		if ($mysqli->connect_errno) {
-		
-			throw new Exception("Error: " . $mysqli->connect_error);
-		}
-
-		$select = "SELECT *
-					FROM preferences
-					WHERE Token = '{$_SESSION['token']}'
-					LIMIT 1
-					";
-
-		if ($resultSelect = $mysqli->query($select)) {
-			
-			if (count($resultSelect->num_rows) > 0) {
-
-				while ($row = $resultSelect->fetch_assoc()) {
-					$preferences = $row;
-				}
-			}
-			
-			$resultSelect->close();
-		}
-
 		$select = "SELECT *
 					FROM orders
-					WHERE Token = '{$_SESSION['token']}'
+					WHERE Shop = '{$_SESSION['shop']}'
 					AND Batched = true
 					";
 

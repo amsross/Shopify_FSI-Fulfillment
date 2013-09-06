@@ -1,5 +1,7 @@
 <?php
+
 	try {
+		
 		$shop_response = $shopifyClient->call('GET', '/admin/shop.json');
 		$smarty->assign('shop_name', $shop_response['name']);
 		
