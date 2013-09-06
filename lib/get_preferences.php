@@ -27,6 +27,9 @@
 					'FTPUserName' => null,
 					'FTPPassword' => null,
 					);
+				
+					$_SESSION['shop'] = $preferences['Shop'];
+					$_SESSION['token'] = $preferences['Token'];
 			} else {
 
 				while ($row = $resultSelect->fetch_assoc()) {
@@ -36,6 +39,4 @@
 
 			$resultSelect->close();
 
-			$_SESSION['shop'] = $preferences['Shop'];
-			$_SESSION['token'] = $preferences['Token'];
 		}

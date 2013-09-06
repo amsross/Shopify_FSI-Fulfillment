@@ -9,6 +9,7 @@ $action = (isset($_GET['action'])) ? $_GET['action'] : 'index';
 
 // Check for shopify authentication
 if ( isset($_SESSION['shop']) && isset($_SESSION['token']) ){
+
 	$shopifyClient = new ShopifyClient($_SESSION['shop'], $_SESSION['token'], SHOPIFY_API_KEY, SHOPIFY_SECRET);
 	$smarty->assign('shopifyClient', $shopifyClient);
 	
@@ -24,6 +25,7 @@ if ( isset($_SESSION['shop']) && isset($_SESSION['token']) ){
 	$smarty->assign('shopURL', $shopifyClient->shop_domain);
 } else if ($_SERVER['HTTP_X_SHOPIFY_TOPIC'] == "orders/paid") {
 
+
 	$_SESSION['shop'] = $_SERVER['HTTP_X_SHOPIFY_SHOP_DOMAIN'];
 	
 	include('lib/get_preferences.php');
@@ -32,6 +34,7 @@ if ( isset($_SESSION['shop']) && isset($_SESSION['token']) ){
 
 	$raw_post_data = json_decode(file_get_contents("php://input"));
 } else {
+
 	// not authorized to get into the app so show them the authorization form
 	$action = "authorize";
 	$smarty->assign('mainnav', array(
