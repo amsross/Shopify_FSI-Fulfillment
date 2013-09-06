@@ -16,7 +16,7 @@ if (isset($_GET['code'])) {
 
 	@$mysqli = new mysqli(MYSQL_SERVER, MYSQL_DB_UNAME, MYSQL_DP_PWORD, MYSQL_DB_NAME);
 
-	if ($mysqli->connect_errno) {
+	if (!$mysqli->connect_errno) {
 
 		$table_format = "CREATE TABLE IF NOT EXISTS `".MYSQL_DB_NAME."`.`orders` (
 			`Shop` varchar(255) DEFAULT NULL,
