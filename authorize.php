@@ -52,8 +52,7 @@ if (isset($_GET['code'])) {
 		$webhook = array(
 			"webhook" => array(
 				"topic" => "orders/paid",
-				// "address" => "http://fsi.shopify.rhinorojo.com/index.php?action=webhook_orders_paid",
-				"address" => "http://foobar.rhinorojo.com/index.php?action=webhook_orders_paid",
+				"address" => "http://fsi.shopify.rhinorojo.com/index.php?action=webhook_orders_paid",
 				"format" => "json",
 			)
 		);
