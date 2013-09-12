@@ -1,9 +1,9 @@
 <?php
 
-function csv_open($preferences, $ftp_conn, $line) {
+function csv_open($fileCSVName, $preferences, $ftp_conn, $line) {
 
-	// Determine the CSV's filename
-	$fileCSVName = $preferences['ClientCode'] . 'ord' . date('mdY') . '.csv';
+	// // Determine the CSV's filename
+	// $fileCSVName = $preferences['ClientCode'] . 'ord' . date('mdY') . '.csv';
 
 	// Try to get an existing version of the file on the server
 	if (@ftp_get($ftp_conn, $fileCSVName, $preferences['FTPServerDir'] . '/' . $fileCSVName, FTP_BINARY) || file_exists($fileCSVName)) {
@@ -23,12 +23,12 @@ function csv_open($preferences, $ftp_conn, $line) {
 	fclose($fileCSV);
 };
 
-function csv_write($preferences, $order_object, $line) {
+function csv_write($fileCSVName, $preferences, $order_object, $line) {
 
 	foreach ( $order_object->line_items as $line_item ) :
 
-		// Determine the CSV's filename
-		$fileCSVName = $preferences['ClientCode'] . 'ord' . date('mdY') . '.csv';
+		// // Determine the CSV's filename
+		// $fileCSVName = $preferences['ClientCode'] . 'ord' . date('mdY') . '.csv';
 
 		// Open the CSV file for writing without destroying existing content
 		$fileCSV = fopen($fileCSVName, 'a');
@@ -81,9 +81,9 @@ function csv_write($preferences, $order_object, $line) {
 	fclose($fileCSV);
 };
 
-function csv_upload($preferences, $ftp_conn) {
+function csv_upload($fileCSVName, $preferences, $ftp_conn) {
 
-	$fileCSVName = $preferences['ClientCode'] . 'ord' . date('mdY') . '.csv';
+	// $fileCSVName = $preferences['ClientCode'] . 'ord' . date('mdY') . '.csv';
 
 	// Try to upload CSV file
 	if (!@ftp_put($ftp_conn, $preferences['FTPServerDir'] . '/' . $fileCSVName, $fileCSVName, FTP_BINARY)) :
@@ -117,11 +117,10 @@ function order_insert($mysqli, $order_object) {
 	// Create the DB record for the order to poll for status later
 	$insert = "INSERT INTO
 		orders (
-			Shop, Token, OrderNumber, Batched
+			Shop, OrderNumber, Batched
 		)
 		VALUES (
 			'{$_SESSION['shop']}',
-			'{$_SESSION['token']}',
 			'{$order_object->id}',
 			false
 		)
@@ -133,7 +132,7 @@ function order_insert($mysqli, $order_object) {
 	endif;
 };
 
-function order_update($mysqli, $order_object) {
+function order_update($fileCSVName, $mysqli, $order_object) {
 
 	$update = "UPDATE orders
 		SET Batched = true

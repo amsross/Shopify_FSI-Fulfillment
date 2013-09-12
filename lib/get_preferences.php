@@ -18,7 +18,7 @@
 			if (count($resultSelect->num_rows) < 1) {
 
 				$preferences = array(
-					'Shop' => null,
+					'Shop' => $_SESSION['shop'],
 					'Token' => null,
 					'ClientCode' => null,
 					'CarrierCode' => null,
@@ -38,5 +38,4 @@
 			}
 
 			$resultSelect->close();
-
 		}

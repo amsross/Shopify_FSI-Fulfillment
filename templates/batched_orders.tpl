@@ -5,8 +5,8 @@
 <table style="width:100%;">
 	<tbody>
 		<tr>
-			<th style="width:50%;">Order Number</th>
-			<th style="width:50%;">Batched Date</th>
+			<th style="/* width:50%; */">Order Number</th>
+			<th style="/* width:50%; */">Batched Date</th>
 		</tr>
 		{foreach $batched_orders as $batched_order}
 		<tr>

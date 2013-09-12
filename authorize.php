@@ -20,7 +20,6 @@ if (isset($_GET['code'])) {
 
 		$table_format = "CREATE TABLE IF NOT EXISTS `".MYSQL_DB_NAME."`.`orders` (
 			`Shop` varchar(255) DEFAULT NULL,
-			`Token` varchar(255) DEFAULT NULL,
 			`OrderNumber` varchar(255) DEFAULT NULL,
 			`ScrapedDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			`Batched` tinyint(1) NOT NULL,
@@ -56,17 +55,27 @@ if (isset($_GET['code'])) {
 				"format" => "json",
 			)
 		);
-		
+		$webhook_create_response = $shopifyClient->call('POST', '/admin/webhooks.json', $webhook);
+
+		$webhook = array(
+			"webhook" => array(
+				"topic" => "app/uninstalled",
+				"address" => "http://fsi.shopify.rhinorojo.com/index.php?action=webhook_app_uninstalled",
+				"format" => "json",
+			)
+		);
 		$webhook_create_response = $shopifyClient->call('POST', '/admin/webhooks.json', $webhook);
 	} catch (ShopifyApiException $e) {
 		
+		error_log(var_export($e,true));
 		$smarty->assign('response', $e->getMessage());
 	} catch (Exception $e) {
 
+		error_log(var_export($e,true));
 		$smarty->assign('response', $e->getMessage());
 	}
 
-	header("Location: index.php");
+	header("Location: index.php?action=preferences");
 
 	exit;
 } else if (isset($_POST['shop']) || isset($_GET['shop'])) {

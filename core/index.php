@@ -13,8 +13,10 @@
 		
 		$order_object_response = $shopifyClient->call('GET', '/admin/orders.json?updated_at_min=2012-09-08');
 		$smarty->assign('order_object', $order_object_response);
-	} catch (ShopifyApiException $ex) {
-		// handle the exception
-		debug($ex);
+	} catch (ShopifyApiException $e) {
+		
+		error_log(var_export($e,true));
+		session_unset();
+		header("Location: index.php");
 	}
 ?>

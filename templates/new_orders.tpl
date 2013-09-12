@@ -6,11 +6,11 @@
 	<table style="width:100%;">
 		<tbody>
 			<tr>
-				<th style="width:8%;"></th>
-				<th style="width:23%;">Order Number</th>
-				<th style="width:23%;">Payment Status</th>
-				<th style="width:23%;">Ship To Name</th>
-				<th style="width:23%;">Order Date</th>
+				<th style="/* width:8%; */"></th>
+				<th style="/* width:23% */;">Order Number</th>
+				<th style="/* width:23% */;">Payment Status</th>
+				<th style="/* width:23% */;">Ship To Name</th>
+				<th style="/* width:23% */;">Order Date</th>
 			</tr>
 			{foreach $new_orders as $new_order}
 			<tr>

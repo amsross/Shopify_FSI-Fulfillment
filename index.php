@@ -11,6 +11,7 @@ $action = (isset($_GET['action'])) ? $_GET['action'] : 'index';
 if ( isset($_SESSION['shop']) && isset($_SESSION['token']) ){
 
 	$shopifyClient = new ShopifyClient($_SESSION['shop'], $_SESSION['token'], SHOPIFY_API_KEY, SHOPIFY_SECRET);
+
 	$smarty->assign('shopifyClient', $shopifyClient);
 	
 	// setup links in view
@@ -23,8 +24,12 @@ if ( isset($_SESSION['shop']) && isset($_SESSION['token']) ){
 		array('name' => 'Return to My Store', 	'href' => $returnURL, 'class' => ''),
 	));
 	$smarty->assign('shopURL', $shopifyClient->shop_domain);
-} else if ($_SERVER['HTTP_X_SHOPIFY_TOPIC'] == "orders/paid") {
+} else if ($_SERVER['HTTP_X_SHOPIFY_TOPIC'] == "app/uninstalled") {
 
+	$_SESSION['shop'] = $_SERVER['HTTP_X_SHOPIFY_SHOP_DOMAIN'];
+
+	include('lib/get_preferences.php');
+} else if ($_SERVER['HTTP_X_SHOPIFY_TOPIC'] == "orders/paid") {
 
 	$_SESSION['shop'] = $_SERVER['HTTP_X_SHOPIFY_SHOP_DOMAIN'];
 	

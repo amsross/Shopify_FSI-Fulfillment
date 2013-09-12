@@ -2,14 +2,13 @@
 
 	include('lib/get_preferences.php');
 
-	$batched_orders = array();
 	$batchedOrders = array();
-	$new_orders = array();
+	$batched_orders = array();
 	$line = '';
 	$ftp_conn = null;
 
-	$smarty->assign('batched_orders', $batchedOrders);
-	$smarty->assign('response', count($batchedOrders) . ' Orders Batched');
+	$smarty->assign('response', '0 Orders Batched');
+	$smarty->assign('batched_orders', array());
 
 	try {
 
@@ -18,14 +17,8 @@
 			throw new Exception("Error: No orders selected.");
 		endif;
 
-		// Open the FTP connection and login
-		$ftp_conn = ftp_open($preferences, $ftp_conn);
-
 		// Get all the previously stored orders for cross-referencing
 		$batched_orders = orders_get_batched($mysqli);
-
-		// Create a CSV file and write the first line depending on the FTP version
-		csv_open($preferences, $ftp_conn, $line);
 
 		foreach ($_POST['orders'] as $order) :
 
@@ -47,39 +40,23 @@
 				endforeach;
 			endif;
 
-			// Create a DB entry for the order
-			order_insert($mysqli, $order_object);
-
 			// Add thisorder to the list to mark as batched if we don't run into trouble
 			$batchedOrders[] = $order_object;
 
-			// Write the order's line to the CSV
-			csv_write($preferences, $order_object, $line);
-		endforeach;
+			$raw_post_data = $order_object;
 
-		// Upload the CSV to FSI's server
-		csv_upload($preferences, $ftp_conn);
+			include('webhook_orders_paid.php');
+		endforeach;
 
 		$smarty->assign('response', count($batchedOrders) . ' Orders Batched');
-		
-		// Mark all the batched products as such
-		foreach ( $batchedOrders as $batchedOrder ) :
-
-			// Mark all the products as successfully batched
-			order_update($mysqli, $batchedOrder);
-		endforeach;
-
-		// Mark the order as Fulfilled in Shopify
-		shopify_fulfill($shopifyClient, $order_object);
 
 		$smarty->assign('batched_orders', $batchedOrders);
-
-		$mysqli->close();
-
 	} catch (ShopifyApiException $e) {
 		
+		error_log(var_export($e,true));
 		$smarty->assign('response', $e->getMessage());
 	} catch (Exception $e) {
 
+		error_log(var_export($e,true));
 		$smarty->assign('response', $e->getMessage());
 	}

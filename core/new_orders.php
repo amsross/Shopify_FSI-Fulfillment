@@ -55,8 +55,10 @@
 
 	} catch (ShopifyApiException $e) {
 		
+		error_log(var_export($e,true));
 		$smarty->assign('response', $e->getMessage());
 	} catch (Exception $e) {
 
+		error_log(var_export($e,true));
 		$smarty->assign('response', $e->getMessage());
 	}
