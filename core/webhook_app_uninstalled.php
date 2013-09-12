@@ -4,12 +4,18 @@
 
 	try {
 
-		$delete = "DELETE
+		$deletePrefs = "DELETE
 					FROM preferences
 					WHERE Shop = '{$_SESSION['shop']}'
 					";
 
-		$resultSelect = $mysqli->query($delete);
+		$resultSelect = $mysqli->query($deletePrefs);
+
+		$deleteOrders = "DELETE
+					FROM orders
+					WHERE Shop = '{$_SESSION['shop']}'
+					";
+		$resultSelect = $mysqli->query($deleteOrders);
 
 	} catch (ShopifyApiException $e) {
 		

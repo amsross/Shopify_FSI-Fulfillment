@@ -35,6 +35,7 @@
 				while ($row = $resultSelect->fetch_assoc()) {
 					$preferences = $row;
 				}
+				$_SESSION['token'] = $preferences['Token'];
 			}
 
 			$resultSelect->close();
