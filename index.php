@@ -34,6 +34,7 @@ if ( isset($_SESSION['shop']) && isset($_SESSION['token']) ){
 	$_SESSION['shop'] = $_SERVER['HTTP_X_SHOPIFY_SHOP_DOMAIN'];
 	
 	include('lib/get_preferences.php');
+	$_SESSION['token'] = $preferences['Token'];
 
 	$shopifyClient = new ShopifyClient($_SESSION['shop'], $_SESSION['token'], SHOPIFY_API_KEY, SHOPIFY_SECRET);
 
