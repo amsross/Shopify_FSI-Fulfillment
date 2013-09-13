@@ -33,13 +33,15 @@ function csv_write($fileCSVName, $preferences, $order_object, $line) {
 		// Open the CSV file for writing without destroying existing content
 		$fileCSV = fopen($fileCSVName, 'a');
 
+		$orderNumber = $preferences['ClientCode'] . end(explode('-',$order_object->id));
+
 		// Write the order's info as a line in the CSV file
 			// FileType
 		$line .= "STANDARD,";
 			// ClientCode
 		$line .= $preferences['ClientCode'] . ",";
 			// OrderNumber
-		$line .= $order_object->id . ",";
+		$line .= $orderNumber . ",";
 			// CarrierCode
 		$line .= $preferences['CarrierCode'] . ",";
 			// ShipToName
