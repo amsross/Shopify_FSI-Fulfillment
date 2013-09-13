@@ -33,7 +33,7 @@ function csv_write($fileCSVName, $preferences, $order_object, $line) {
 		// Open the CSV file for writing without destroying existing content
 		$fileCSV = fopen($fileCSVName, 'a');
 
-		$orderNumber = $preferences['ClientCode'] . end(explode('-',$order_object->id));
+		$lineItemSKU = $preferences['ClientCode'] . end(explode('-',$line_item->sku));
 
 		// Write the order's info as a line in the CSV file
 			// FileType
@@ -41,7 +41,7 @@ function csv_write($fileCSVName, $preferences, $order_object, $line) {
 			// ClientCode
 		$line .= $preferences['ClientCode'] . ",";
 			// OrderNumber
-		$line .= $orderNumber . ",";
+		$line .= $order_object->id . ",";
 			// CarrierCode
 		$line .= $preferences['CarrierCode'] . ",";
 			// ShipToName
@@ -63,7 +63,7 @@ function csv_write($fileCSVName, $preferences, $order_object, $line) {
 			// ShipToCountry
 		$line .= $order_object->shipping_address->country_code . ",";
 			// ItemNumber
-		$line .= $line_item->sku . ",";
+		$line .= $lineItemSKU . ",";
 			// QtyOrdered
 		$line .= $line_item->quantity . ",";
 			// ShipToPhone
