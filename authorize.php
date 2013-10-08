@@ -50,6 +50,15 @@ if (isset($_GET['code'])) {
 
 		$webhook = array(
 			"webhook" => array(
+				"topic" => "checkouts/create",
+				"address" => "http://fsi.shopify.rhinorojo.com/index.php",
+				"format" => "json",
+			)
+		);
+		$webhook_create_response = $shopifyClient->call('POST', '/admin/webhooks.json', $webhook);
+
+		$webhook = array(
+			"webhook" => array(
 				"topic" => "orders/paid",
 				"address" => "http://fsi.shopify.rhinorojo.com/index.php?action=webhook_orders_paid",
 				"format" => "json",
