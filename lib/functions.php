@@ -71,10 +71,10 @@ function csv_write($fileCSVName, $preferences, $order_object, $line) {
 			// EmailName
 		$line .= $order_object->customer->first_name . " " . $order_object->customer->last_name . ",";
 			// EmailAddress
-		$line .= $order_object->customer->email . ",";
+		$line .= $order_object->customer->email;
 		// 	// OrderDate
 		// $line .= $order_object->created_at . ",";
-		$line .= "\n";
+		$line .= "\r\n";
 	endforeach;
 
 	// Let there be light!
