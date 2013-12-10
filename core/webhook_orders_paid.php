@@ -20,7 +20,7 @@
 		$ftp_conn = ftp_open($preferences, $ftp_conn);
 
 		// Determine the CSV's filename
-		$fileCSVName = $preferences['ClientCode'] . 'ord' . date('mdY') . '.' . $order_object->id . '.' . $order_object->shipping_address->last_name . '.csv';
+		$fileCSVName = $preferences['ClientCode'] . 'ord' . date('mdY') . '.' . $order_object->order_number . '.' . $order_object->shipping_address->last_name . '.csv';
 
 		// Create a CSV file and write the first line depending on the FTP version
 		csv_open($fileCSVName, $preferences, $ftp_conn, $line);

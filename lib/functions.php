@@ -41,7 +41,7 @@ function csv_write($fileCSVName, $preferences, $order_object, $line) {
 			// ClientCode
 		$line .= $preferences['ClientCode'] . ",";
 			// OrderNumber
-		$line .= $order_object->id . ",";
+		$line .= $order_object->order_number . ",";
 			// CarrierCode
 		$line .= $preferences['CarrierCode'] . ",";
 			// ShipToName
