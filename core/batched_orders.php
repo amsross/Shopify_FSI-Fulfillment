@@ -13,6 +13,8 @@
 					FROM orders
 					WHERE Shop = '{$_SESSION['shop']}'
 					AND Batched = true
+					ORDER BY id DESC
+					LIMIT 0, 20
 					";
 
 		if ($resultSelect = $mysqli->query($select)) {
