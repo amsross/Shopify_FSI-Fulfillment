@@ -2,7 +2,6 @@ _prework
 *ord*.csv
 templates_c/*.php
 error_log
-config.lib.php
 img/color*
 img/manufacturer*
 *.sublime-project
