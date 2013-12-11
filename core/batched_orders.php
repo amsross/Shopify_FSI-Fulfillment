@@ -13,7 +13,7 @@
 					FROM orders
 					WHERE Shop = '{$_SESSION['shop']}'
 					AND Batched = true
-					ORDER BY id DESC
+					ORDER BY ScrapedDate DESC
 					LIMIT 0, 20
 					";
 
