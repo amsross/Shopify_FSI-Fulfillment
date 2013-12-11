@@ -22,8 +22,8 @@ if ( isset($_SESSION['shop']) && isset($_SESSION['token']) ){
 		array('name' => 'New orders', 	'href' => '?action=new_orders', 'class' => ''),
 		array('name' => 'Batched orders', 	'href' => '?action=batched_orders', 'class' => ''),
 		array('name' => 'Return to My Store', 	'href' => $returnURL, 'class' => ''),
-		array('name' => 'Submit an issue with GitHub', 	'href' => 'https://github.com/amsross/Shopify_FSI-Fulfillment/issues', 'class' => ''),
-		array('name' => 'Submit an issue without GitHub', 	'href' => 'http://gitreports.com/issue/amsross/Shopify_FSI-Fulfillment', 'class' => ''),
+		array('name' => 'Issues', 	'href' => 'https://github.com/amsross/Shopify_FSI-Fulfillment/issues', 'class' => ''),
+		// array('name' => 'Submit an issue without GitHub', 	'href' => 'http://gitreports.com/issue/amsross/Shopify_FSI-Fulfillment', 'class' => ''),
 	));
 	$smarty->assign('shopURL', $shopifyClient->shop_domain);
 } else if ($_SERVER['HTTP_X_SHOPIFY_TOPIC'] == "app/uninstalled") {
